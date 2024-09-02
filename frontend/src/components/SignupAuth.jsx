@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Link, redirect, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const SignupAuth = () => {
     const [phone,setPhone] = useState('');
@@ -9,6 +9,13 @@ export const SignupAuth = () => {
     const [email, setEmail] = useState('');
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+          navigate('/dashboard'); // Redirect to dashboard if logged in
+      }
+    }, [navigate]);
 
     const onClickHandler = async () => {
       try {
@@ -21,7 +28,7 @@ export const SignupAuth = () => {
 
           if (response.status === 201) {
               alert('Registration successful! Verification code sent to your email.');
-              navigate('/verify')
+              navigate('/verify',{ state: { email } })
           } else {
               alert('Registration failed. Please try again.');
           }
