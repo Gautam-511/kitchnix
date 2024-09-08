@@ -6,7 +6,7 @@ import Login from './routes/Login'
 import Signup from './routes/Signup'
 import Otp from './routes/Otp'
 import { ProtectedRoute } from "./components/ProtectedRoute"; // Import the ProtectedRoute component
-import { Dashboard } from "./routes/Dashboard";
+import Dashboard from "./routes/Dashboard";
 import LandingPage from './routes/LandingPage';
 
 
