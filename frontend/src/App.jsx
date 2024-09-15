@@ -8,6 +8,9 @@ import Otp from './routes/Otp'
 import { ProtectedRoute } from "./components/ProtectedRoute"; // Import the ProtectedRoute component
 import Dashboard from "./routes/Dashboard";
 import LandingPage from './routes/LandingPage';
+import AdminLogin from './routes/AdminLogin';
+import AdminDashboard from './routes/AdminDashboard';
+import { ProtectedAdminRoute } from './components/ProtectedAdminRoute';
 
 
 function App() {
@@ -26,6 +29,15 @@ function App() {
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
+          }
+        />
+      <Route path='/adminlogin' element={<AdminLogin/>} />
+      <Route
+          path="/admindashboard"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard/>
+            </ProtectedAdminRoute>
           }
         />
     </Routes>
