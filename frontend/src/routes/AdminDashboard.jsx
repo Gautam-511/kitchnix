@@ -2,11 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { Plus, Edit, Trash2, Search, Menu, X, Clock, IndianRupee, Globe } from 'lucide-react'
 import axios from 'axios';
 
-const RecipeCard = ({ recipe, onEdit, onDelete }) => (
+const RecipeCard = ({ recipe, onEdit, onDelete }) => {
+  const [expanded, setExpanded] = useState(false);
+  const truncatedDescription = recipe.recipe_description?.slice(0,100) + (recipe.recipe_description.length>100 ? '...' : '');
+
+
+  return(
   <div className="bg-white rounded-lg shadow-md p-4 flex flex-col">
     <img src={recipe.recipe_imgurl} alt={recipe.recipe_name} className="w-full h-48 object-cover rounded-md mb-4" />
     <h3 className="font-semibold text-lg text-gray-800 mb-2">{recipe.recipe_name}</h3>
-    <p className="text-sm text-gray-600 mb-2">{recipe.recipe_description}</p>
+    <p className="text-sm text-gray-600 mb-2">{expanded? recipe.recipe_description : truncatedDescription}
+    {recipe.recipe_description.length > 100 && (
+          <span
+            className="text-green-600 cursor-pointer ml-2"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? "Show Less" : "Read More"}
+          </span>
+        )}
+
+    </p>
+    {/* <button className='text-green-500 text-sm underline' onClick={() => setExpanded(!expanded)}>{expanded? 'show less':'show more'}</button> */}
     <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
       <span className="flex items-center"><Globe size={16} className="mr-1" /> {recipe.recipe_cuisine}</span>
       <span className="flex items-center"><Clock size={16} className="mr-1" /> {recipe.recipe_cooktime} mins</span>
@@ -27,7 +43,8 @@ const RecipeCard = ({ recipe, onEdit, onDelete }) => (
       </button>
     </div>
   </div>
-)
+  )
+}
 
 const RecipeForm = ({ recipe, onSave, onCancel }) => {
   const [name, setName] = useState(recipe?.recipe_name || '')
